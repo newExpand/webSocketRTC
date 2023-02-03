@@ -20,11 +20,11 @@ const httpServer = http.createServer(app);
 const wsServer = SocketIO(httpServer);
 
 wsServer.on("connection", socket => {
-    socket.on("enter_room", (msg, fn) => {
-        console.log(msg);
+    socket.on("enter_room", (roomName, backend) => {
+        console.log(roomName);
         setTimeout(() => {
-            fn()
-        }, 5000)
+            backend("난 밲엔드다!")
+        }, 3000)
     })
 })
 

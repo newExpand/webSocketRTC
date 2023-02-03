@@ -3,12 +3,17 @@ const socket = io();
 const welcome = document.getElementById("welcome");
 const form = welcome.querySelector("form");
 
+function backend(msg) {
+    console.log("백엔드가 말합니다 : ", msg)
+}
+
 function handleRoomSubmit(e) {
     e.preventDefault();
     const input = form.querySelector("input");
-    socket.emit("enter_room", {payload : input.value}, () => {
-        console.log("이거 서버로 함수보내는거 실화임??")
-    });
+    socket.emit("enter_room", 
+    input.value,
+    backend,
+    );
     input.value = "";
 }
 
