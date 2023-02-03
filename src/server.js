@@ -22,15 +22,15 @@ function onSocketClose() {
     console.log("닫힘??ㅋㅋ");
 }
 
-function onSocketMessage(message) {
-    console.log(message.toString("utf-8"));
-}
+const sockets = [];
 
 wss.on("connection", (socket) => {
+    sockets.push(socket);
     console.log("갔냐?");
     socket.on("close", onSocketClose);
-    socket.on("message", onSocketMessage);
-    socket.send("안뇽!@");
+    socket.on("message", (message) => {
+        sockets.forEach(aSocket => aSocket.send(message.toString("utf-8")))
+    });
 });
 
 server.listen(3000, handleListen);

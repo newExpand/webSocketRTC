@@ -1,3 +1,6 @@
+const messageList = document.querySelector("ul");
+const messageForm = document.querySelector("form");
+
 const socket = new WebSocket(`ws://${window.location.host}`);
 
 socket.addEventListener("open", () => {
@@ -12,6 +15,11 @@ socket.addEventListener("close", () => {
     console.log("야 너 연결끊겼다ㅋㅋㅋ");
 });
 
-setTimeout(() => {
-    socket.send("나 브라우전데 너 뉘기야?");
-}, 10000);
+function handleSubmit(e) {
+    e.preventDefault();
+    const input = messageForm.querySelector("input");
+    socket.send(input.value);
+    input.value = "";
+}
+
+messageForm.addEventListener("submit", handleSubmit);
