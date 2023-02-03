@@ -10,8 +10,11 @@ html(lang="en")
         header  
             h1 RTC
         main 
+            form#nick
+                input(type="text", placeholder="닉네임을 써주세요", required)
+                button 저장 
             ul
-            form
+            form#message
                 input(type="text", placeholder="메세지를 작성해주세요", required)
                 button 보내기 
         script(src="/public/js/app.js") 
