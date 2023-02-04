@@ -13,6 +13,15 @@ html(lang="en")
                     form
                         input(placeholder="대화방명", required. type="text")
                         button 방에 입장하기
+                div#room
+                    h3
+                    ul
+                    form#name
+                        input(placeholder="닉네임", required. type="text")
+                        button 저장
+                    form#msg
+                        input(placeholder="메세지", required. type="text")
+                        button 보내기
         main 
 
         script(src="/socket.io/socket.io.js") 

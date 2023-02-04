@@ -19,14 +19,59 @@ const handleListen = () => console.log(`http://localhost:3000`);
 const httpServer = http.createServer(app);
 const wsServer = SocketIO(httpServer);
 
-wsServer.on("connection", socket => {
-    socket.on("enter_room", (roomName, backend) => {
-        console.log(roomName);
-        setTimeout(() => {
-            backend("난 밲엔드다!")
-        }, 3000)
+function publicRoom() {
+    const {
+        sockets: {
+            adapter : {sids, rooms}
+        }
+    } = wsServer;
+    const publicRoom = [];
+    rooms.forEach((_, key) => {
+        if (sids.get(key) === undefined) {
+            publicRoom.push(key);
+        }
     })
-})
+
+    return publicRoom;
+}
+
+wsServer.on("connection", (socket) => {
+    socket["nickname"] = "익명";
+
+    socket.onAny((e) => {
+        console.log(`소켓 이벤트 : ${e}`);
+    });
+
+    socket.on("enter_room", (roomName, showRoom) => {
+        socket.join(roomName);
+        showRoom();
+        socket.to(roomName).emit("welcome", socket.nickname);
+    });
+
+    socket.on("disconnecting", () => {
+        socket.rooms.forEach((rooms) => socket.to(rooms).emit("bye", socket.nickname));
+    });
+
+    socket.on("new_message", (msg, room, done) => {
+        socket.to(room).emit("new_message", `${socket.nickname} : ${msg}`);
+        done();
+    });
+
+    socket.on("nickname", nickname => socket["nickname"] = nickname)
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
