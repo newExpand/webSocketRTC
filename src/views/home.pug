@@ -9,25 +9,80 @@ html(lang="en")
     body
         header  
             h1 RTC
-                div#welcome
-                    form
-                        input(placeholder="대화방명", required. type="text")
-                        button 방에 입장하기
-                    h4 열린 방 :
-                    ul
-                div#room
-                    h3
-                    ul
-                    form#name
-                        input(placeholder="닉네임", required. type="text")
-                        button 저장
-                    form#msg
-                        input(placeholder="메세지", required. type="text")
-                        button 보내기
         main 
-
+            div#myStream
+                video#myFace(autoplay, playsinline, width="400", height="400") 
+                button#mute 음소거
+                button#camera 카메라 끄기
+                select#cameras
+                    option(value="device") Face Camera
         script(src="/socket.io/socket.io.js") 
         script(src="/public/js/app.js") 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//- socket.io 공부한 부분
+//- doctype html
+//- html(lang="en")
+//-     head
+//-         meta(charset="UTF-8")
+//-         meta(http-equiv="X-UA-Compatible", content="IE=edge")
+//-         meta(name="viewport", content="width=device-width, initial-scale=1.0")
+//-         title WebSocketRTC
+//-         link(rel="stylesheet", href="https://unpkg.com/mvp.css@1.12/mvp.css")
+//-     body
+//-         header  
+//-             h1 RTC
+//-                 div#welcome
+//-                     form
+//-                         input(placeholder="대화방명", required. type="text")
+//-                         button 방에 입장하기
+//-                     h4 열린 방 :
+//-                     ul
+//-                 div#room
+//-                     h3
+//-                     ul
+//-                     form#name
+//-                         input(placeholder="닉네임", required. type="text")
+//-                         button 저장
+//-                     form#msg
+//-                         input(placeholder="메세지", required. type="text")
+//-                         button 보내기
+//-         main 
+
+//-         script(src="/socket.io/socket.io.js") 
+//-         script(src="/public/js/app.js") 
 
 
 
