@@ -37,6 +37,7 @@ function publicRoom() {
 
 wsServer.on("connection", (socket) => {
     socket["nickname"] = "익명";
+    wsServer.sockets.emit("room_change", publicRoom());
 
     socket.onAny((e) => {
         console.log(`소켓 이벤트 : ${e}`);
@@ -46,10 +47,15 @@ wsServer.on("connection", (socket) => {
         socket.join(roomName);
         showRoom();
         socket.to(roomName).emit("welcome", socket.nickname);
+        wsServer.sockets.emit("room_change", publicRoom());
     });
 
     socket.on("disconnecting", () => {
         socket.rooms.forEach((rooms) => socket.to(rooms).emit("bye", socket.nickname));
+    });
+
+    socket.on("disconnect", () => {
+        wsServer.sockets.emit("room_change", publicRoom());
     });
 
     socket.on("new_message", (msg, room, done) => {
